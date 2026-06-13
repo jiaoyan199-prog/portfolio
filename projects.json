@@ -91,20 +91,22 @@
         "panorama": ""
     },
     {
-        "id": 1781344442170,
-        "title": "璀璨",
+        "id": 1781345274161,
+        "title": "翻新",
         "cat": "residential",
         "cn": "住宅空间",
-        "area": "",
-        "sty": "",
+        "area": "60",
+        "sty": "现代简约",
         "c1": "#c4a882",
         "c2": "#8b7355",
-        "cover": "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344078554-cover.jpg",
+        "cover": "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345274161-cover.jpg",
         "imgs": [
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344081245-img0.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344083612-img1.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344085968-img2.jpg"
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345276764-img0.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345278364-img1.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345280036-img2.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345281733-img3.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345283636-img4.jpg"
         ],
-        "panorama": "https://720.3vjia.com/S139481728?lang=zh-CN"
+        "panorama": "https://vr.shinewonder.com/pano/page/publik/pklimit?inf=AG@@FELMBBG@GFLBM"
     }
 ]
