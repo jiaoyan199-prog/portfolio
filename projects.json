@@ -95,5 +95,24 @@
             "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346062237-img4.jpg"
         ],
         "panorama": "https://vr.shinewonder.com/pano/page/publik/pklimit?inf=AG@@FELMBBG@GFLBM"
+    },
+    {
+        "id": 1781346324558,
+        "title": "99平横厅",
+        "cat": "residential",
+        "cn": "住宅空间",
+        "area": "",
+        "sty": "现代简约",
+        "c1": "#c4a882",
+        "c2": "#8b7355",
+        "cover": "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346324558-cover.jpg",
+        "imgs": [
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346326627-img0.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346328524-img1.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346330140-img2.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346332106-img3.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781346334211-img4.jpg"
+        ],
+        "panorama": "https://720.3vjia.com/S148390646?lang=zh-CN"
     }
 ]
