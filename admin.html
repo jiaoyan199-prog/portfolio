@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理后台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:#F5F1EC;color:#3D3228;min-height:100vh}
+.lp{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#8B7355,#5A4A3A)}
+.lb{background:#fff;padding:2.5rem;border-radius:6px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.lb h2{text-align:center;margin-bottom:1.5rem;font-size:1.3rem;letter-spacing:2px}
+.lb input{width:100%;padding:.8rem;border:1px solid #E0D8CF;font-family:'Noto Sans SC',sans-serif;font-size:.95rem;text-align:center;letter-spacing:4px;outline:none;margin-bottom:1rem}
+.lb input:focus{border-color:#C4A882}
+.lb button{width:100%;padding:.8rem;background:#8B7355;color:#fff;border:none;font-family:'Noto Sans SC',sans-serif;font-size:1rem;cursor:pointer;letter-spacing:2px}
+.lb button:hover{background:#6B5A42}
+.le{color:#C67B5C;font-size:.85rem;text-align:center;margin-bottom:.8rem;display:none}
+.hd{background:#3D3228;color:#F5EDE4;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.hd h1{font-size:1.2rem;font-weight:500;letter-spacing:2px}
+.hr{display:flex;gap:1.5rem;align-items:center}
+.hd a{color:#C4A882;text-decoration:none;font-size:.9rem}
+.w{max-width:1100px;margin:2rem auto;padding:0 1.5rem}
+.tb{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.ti{padding:.7rem 1.5rem;border:none;background:#E0D8CF;color:#3D3228;font-family:'Noto Sans SC',sans-serif;font-size:.9rem;cursor:pointer}
+.ti.on{background:#8B7355;color:#fff}
+.pn{display:none}.pn.on{display:block}
+.cd{background:#fff;border-radius:6px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.it{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid #F0EBE4}
+.it:last-child{border-bottom:none}
+.tm{width:80px;height:60px;border-radius:4px;flex-shrink:0;background-size:cover;background-position:center}
+.nf{flex:1}.nf h4{font-size:1rem;margin-bottom:.2rem}.nf p{font-size:.85rem;color:#7A6E62}
+.ac{display:flex;gap:.5rem}
+.sm{padding:.4rem .8rem;border:none;font-family:'Noto Sans SC',sans-serif;font-size:.8rem;cursor:pointer;border-radius:3px}
+.se{background:#C4A882;color:#fff}.sd{background:#C67B5C;color:#fff}.sm:hover{opacity:.85}
+.fg{margin-bottom:1rem}.fg label{display:block;font-size:.85rem;margin-bottom:.3rem;color:#7A6E62}
+.fg input,.fg select,.fg textarea{width:100%;padding:.7rem;border:1px solid #E0D8CF;background:#fff;font-family:'Noto Sans SC',sans-serif;font-size:.9rem;color:#3D3228;outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#C4A882}
+.fg textarea{resize:vertical}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.bp{padding:.7rem 2rem;background:#8B7355;color:#fff;border:none;font-family:'Noto Sans SC',sans-serif;font-size:.95rem;cursor:pointer;letter-spacing:1px}
+.bp:hover{background:#6B5A42}
+.bs{padding:.7rem 2rem;background:transparent;color:#8B7355;border:1px solid #8B7355;font-family:'Noto Sans SC',sans-serif;font-size:.95rem;cursor:pointer;letter-spacing:1px}
+.bs:hover{background:#8B7355;color:#fff}
+.br{display:flex;gap:1rem;margin-top:1.5rem}
+.pi{max-width:200px;max-height:120px;border-radius:4px;margin-top:.5rem;display:none}
+.tt{position:fixed;top:1rem;right:1rem;background:#6B7F5E;color:#fff;padding:.8rem 1.5rem;border-radius:4px;font-size:.9rem;z-index:9999;transform:translateX(120%);transition:transform .3s}
+.tt.on{transform:translateX(0)}
+.es{margin-top:1rem;padding-top:1rem;border-top:1px solid #F0EBE4}
+.es p{font-size:.85rem;color:#7A6E62;margin-bottom:.8rem}
+.em{text-align:center;color:#7A6E62;padding:2rem}
+@media(max-width:768px){.fr{grid-template-columns:1fr}.it{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div id="lp" class="lp">
+<div class="lb">
+<h2>管理后台</h2>
+<div class="le" id="le">密码错误</div>
+<input type="password" id="pw" placeholder="请输入管理密码" onkeydown="if(event.key==='Enter')login()">
+<button onclick="login()">登 录</button>
+</div>
+</div>
+<div id="app" style="display:none">
+<div class="hd">
+<h1>作品集管理后台</h1>
+<div class="hr"><a href="index.html">返回网站</a><a href="#" onclick="logout();return false" style="color:#C67B5C">退出</a></div>
+</div>
+<div class="w">
+<div class="tb" id="tabBar">
+<button class="ti on" onclick="go('list')">项目管理</button>
+<button class="ti" onclick="rs();go('add')">添加项目</button>
+<button class="ti" onclick="go('set')">网站设置</button>
+<button class="ti" onclick="go('pwd')">修改密码</button>
+</div>
+<div id="p-list" class="pn on">
+<div class="cd"><div id="pl"></div></div>
+<div class="cd es">
+<p>下载后替换网站目录 projects.json，重新部署即可</p>
+<button class="bp" onclick="dl()">下载 projects.json</button>
+<button class="bs" style="margin-left:.5rem" onclick="document.getElementById('if').click()">导入 JSON</button>
+<input type="file" id="if" accept=".json" style="display:none" onchange="imp(this)">
+</div>
+</div>
+<div id="p-add" class="pn">
+<div class="cd">
+<h3 style="margin-bottom:1.2rem" id="ft">添加新项目</h3>
+<input type="hidden" id="eid" value="">
+<div class="fg"><label>项目名称 *</label><input type="text" id="iTitle" placeholder="例：湖畔雅居"></div>
+<div class="fr">
+<div class="fg"><label>项目类型</label><select id="iCat"><option value="residential">住宅空间</option><option value="commercial">商业空间</option><option value="office">办公空间</option></select></div>
+<div class="fg"><label>风格</label><input type="text" id="iStyle" placeholder="例：现代简约"></div>
+</div>
+<div class="fr">
+<div class="fg"><label>面积</label><input type="text" id="iArea" placeholder="例：180㎡"></div>
+<div class="fg"><label>图片（可选）</label><input type="file" id="iImg" accept="image/*" onchange="prev(this)"><img id="ip" class="pi"></div>
+</div>
+<div class="fr">
+<div class="fg"><label>渐变色1</label><input type="color" id="iC1" value="#C4A882"></div>
+<div class="fg"><label>渐变色2</label><input type="color" id="iC2" value="#8B7355"></div>
+</div>
+<div class="br">
+<button class="bp" onclick="sv()">保存项目</button>
+<button class="bs" onclick="rs()">取消</button>
+</div>
+</div>
+</div>
+<div id="p-set" class="pn">
+<div class="cd">
+<h3 style="margin-bottom:1.2rem">网站基本信息</h3>
+<div class="fg"><label>工作室名称</label><input type="text" id="sName"></div>
+<div class="fg"><label>首页标题</label><input type="text" id="sHero"></div>
+<div class="fg"><label>首页副标题</label><input type="text" id="sSub"></div>
+<div class="fg"><label>关于我</label><textarea id="sAbout" rows="4"></textarea></div>
+<div class="fr">
+<div class="fg"><label>电话</label><input type="text" id="sTel"></div>
+<div class="fg"><label>邮箱</label><input type="text" id="sEm"></div>
+</div>
+<div class="fr">
+<div class="fg"><label>地址</label><input type="text" id="sAddr"></div>
+<div class="fg"><label>微信</label><input type="text" id="sWx"></div>
+</div>
+<div class="fr">
+<div class="fg"><label>项目数</label><input type="text" id="s1" placeholder="200+"></div>
+<div class="fg"><label>从业年限</label><input type="text" id="s2" placeholder="10+"></div>
+</div>
+<div class="fg"><label>奖项数</label><input type="text" id="s3" placeholder="5"></div>
+<div class="br"><button class="bp" onclick="svs()">保存设置</button></div>
+</div>
+</div>
+<div id="p-pwd" class="pn">
+<div class="cd">
+<h3 style="margin-bottom:1.2rem">修改密码</h3>
+<div class="fg"><label>当前密码</label><input type="password" id="op"></div>
+<div class="fg"><label>新密码</label><input type="password" id="np"></div>
+<div class="fg"><label>确认新密码</label><input type="password" id="cp"></div>
+<div class="br"><button class="bp" onclick="cpw()">修改密码</button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tt" id="tt"></div>
+<script>
+var D=[];
+var CI='';
+var EI='';
+var D0=[
+{id:1,title:"湖畔雅居",cat:"residential",cn:"住宅空间",area:"180㎡",sty:"现代简约",c1:"#C4A882",c2:"#8B7355",img:""},
+{id:2,title:"绿谷咖啡",cat:"commercial",cn:"商业空间",area:"120㎡",sty:"自然风格",c1:"#6B7F5E",c2:"#4A5E40",img:""},
+{id:3,title:"暖阳之家",cat:"residential",cn:"住宅空间",area:"260㎡",sty:"日式侘寂",c1:"#D4A574",c2:"#A67C52",img:""},
+{id:4,title:"创想工作室",cat:"office",cn:"办公空间",area:"350㎡",sty:"工业现代",c1:"#8B8B8B",c2:"#5A5A5A",img:""},
+{id:5,title:"云栖别墅",cat:"residential",cn:"住宅空间",area:"420㎡",sty:"新中式",c1:"#E8D5C4",c2:"#C9B8A8",img:""},
+{id:6,title:"拾光书店",cat:"commercial",cn:"商业空间",area:"200㎡",sty:"复古文艺",c1:"#B8860B",c2:"#8B6914",img:""}
+];
+
+function load(){
+var s=localStorage.getItem('pf_pj');
+if(!s){var old=localStorage.getItem('portfolio_projects');if(old){s=old;localStorage.setItem('pf_pj',old)}}
+if(s){try{D=JSON.parse(s)}catch(e){D=JSON.parse(JSON.stringify(D0))}}
+else{D=JSON.parse(JSON.stringify(D0))}
+}
+function sav(){localStorage.setItem('pf_pj',JSON.stringify(D))}
+
+function login(){
+var v=document.getElementById('pw').value;
+var k=localStorage.getItem('pf_pw')||'admin123';
+if(v===k){
+sessionStorage.setItem('pf_ok','1');
+document.getElementById('lp').style.display='none';
+document.getElementById('app').style.display='block';
+boot();
+}else{document.getElementById('le').style.display='block'}
+}
+function logout(){
+sessionStorage.removeItem('pf_ok');
+document.getElementById('lp').style.display='';
+document.getElementById('app').style.display='none';
+document.getElementById('pw').value='';
+}
+function boot(){
+load();
+rl();
+ls();
+}
+
+function go(n){
+var ts=document.getElementById('tabBar').children;
+for(var i=0;i<ts.length;i++){ts[i].className='ti'}
+var ps=document.querySelectorAll('.pn');
+for(var j=0;j<ps.length;j++){ps[j].className='pn'}
+document.getElementById('p-'+n).className='pn on';
+var map={list:0,add:1,set:2,pwd:3};
+ts[map[n]].className='ti on';
+}
+
+function rl(){
+var el=document.getElementById('pl');
+if(!el)return;
+if(D.length===0){el.innerHTML='<p class="em">暂无项目</p>';return}
+var h='';
+for(var i=0;i<D.length;i++){
+var p=D[i];
+var bg=p.img?'background-image:url('+p.img+')':'background:linear-gradient(135deg,'+p.c1+' 0%,'+p.c2+' 100%)';
+h+='<div class="it"><div class="tm" style="'+bg+';background-size:cover;background-position:center"></div><div class="nf"><h4>'+x(p.title)+'</h4><p>'+x(p.cn)+' · '+x(p.area)+' · '+x(p.sty)+'</p></div><div class="ac"><button class="sm se" onclick="ep('+p.id+')">编辑</button><button class="sm sd" onclick="dp('+p.id+')">删除</button></div></div>';
+}
+el.innerHTML=h;
+}
+function x(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
+
+function sv(){
+var t=document.getElementById('iTitle').value.trim();
+if(!t){toast('请输入项目名称');return}
+var map={residential:'住宅空间',commercial:'商业空间',office:'办公空间'};
+var c=document.getElementById('iCat').value;
+var o={id:Date.now(),title:t,cat:c,cn:map[c],area:document.getElementById('iArea').value.trim(),sty:document.getElementById('iStyle').value.trim(),c1:document.getElementById('iC1').value,c2:document.getElementById('iC2').value,img:CI};
+D.push(o);
+sav();
+rl();
+rs();
+go('list');
+toast('已添加，共'+D.length+'个项目');
+}
+
+function ep(id){
+var p=null;
+for(var i=0;i<D.length;i++){if(D[i].id===id){p=D[i];break}}
+if(!p)return;
+EI=''+p.id;
+document.getElementById('iTitle').value=p.title;
+document.getElementById('iCat').value=p.cat;
+document.getElementById('iStyle').value=p.sty;
+document.getElementById('iArea').value=p.area;
+document.getElementById('iC1').value=p.c1;
+document.getElementById('iC2').value=p.c2;
+CI=p.img||'';
+if(CI){document.getElementById('ip').src=CI;document.getElementById('ip').style.display='block'}
+document.getElementById('ft').textContent='编辑项目';
+go('add');
+}
+
+function dp(id){
+if(!confirm('确定删除？'))return;
+var n=[];for(var i=0;i<D.length;i++){if(D[i].id!==id)n.push(D[i])}
+D=n;sav();rl();toast('已删除');
+}
+
+function rs(){
+document.getElementById('iTitle').value='';
+document.getElementById('iCat').value='residential';
+document.getElementById('iStyle').value='';
+document.getElementById('iArea').value='';
+document.getElementById('iC1').value='#C4A882';
+document.getElementById('iC2').value='#8B7355';
+document.getElementById('iImg').value='';
+document.getElementById('ip').style.display='none';
+EI='';CI='';
+document.getElementById('ft').textContent='添加新项目';
+}
+
+function prev(inp){
+var f=inp.files[0];if(!f)return;
+var r=new FileReader();
+r.onload=function(e){CI=e.target.result;document.getElementById('ip').src=CI;document.getElementById('ip').style.display='block'};
+r.readAsDataURL(f);
+}
+
+function svs(){
+var o={name:document.getElementById('sName').value.trim(),heroTitle:document.getElementById('sHero').value.trim(),heroSub:document.getElementById('sSub').value.trim(),about:document.getElementById('sAbout').value.trim(),phone:document.getElementById('sTel').value.trim(),email:document.getElementById('sEm').value.trim(),address:document.getElementById('sAddr').value.trim(),wechat:document.getElementById('sWx').value.trim(),stat1:document.getElementById('s1').value.trim(),stat2:document.getElementById('s2').value.trim(),stat3:document.getElementById('s3').value.trim()};
+localStorage.setItem('pf_st',JSON.stringify(o));toast('设置已保存');
+}
+
+function ls(){
+var s=localStorage.getItem('pf_st');
+if(!s){var old=localStorage.getItem('portfolio_settings');if(old){s=old;localStorage.setItem('pf_st',old)}}
+if(!s)return;
+try{var o=JSON.parse(s);
+document.getElementById('sName').value=o.name||'';
+document.getElementById('sHero').value=o.heroTitle||'';
+document.getElementById('sSub').value=o.heroSub||'';
+document.getElementById('sAbout').value=o.about||'';
+document.getElementById('sTel').value=o.phone||'';
+document.getElementById('sEm').value=o.email||'';
+document.getElementById('sAddr').value=o.address||'';
+document.getElementById('sWx').value=o.wechat||'';
+document.getElementById('s1').value=o.stat1||'';
+document.getElementById('s2').value=o.stat2||'';
+document.getElementById('s3').value=o.stat3||'';
+}catch(e){}
+}
+
+function cpw(){
+var k=localStorage.getItem('pf_pw')||'admin123';
+if(document.getElementById('op').value!==k){toast('当前密码错误');return}
+if(document.getElementById('np').value.length<4){toast('新密码至少4位');return}
+if(document.getElementById('np').value!==document.getElementById('cp').value){toast('两次密码不一致');return}
+localStorage.setItem('pf_pw',document.getElementById('np').value);
+document.getElementById('op').value='';document.getElementById('np').value='';document.getElementById('cp').value='';
+toast('密码已修改');
+}
+
+function dl(){
+var b=new Blob([JSON.stringify(D,null,4)],{type:'application/json'});
+var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='projects.json';a.click();toast('已下载');
+}
+
+function imp(inp){
+var f=inp.files[0];if(!f)return;
+var r=new FileReader();
+r.onload=function(e){try{D=JSON.parse(e.target.result);sav();rl();toast('导入成功')}catch(err){toast('格式错误')}};
+r.readAsText(f);
+}
+
+function toast(m){var t=document.getElementById('tt');t.textContent=m;t.className='tt on';setTimeout(function(){t.className='tt'},2500)}
+
+if(sessionStorage.getItem('pf_ok')==='1'){document.getElementById('lp').style.display='none';document.getElementById('app').style.display='block';boot()}
+</script>
+</body>
+</html>
