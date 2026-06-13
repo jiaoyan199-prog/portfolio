@@ -252,23 +252,60 @@ el.innerHTML=h;
 }
 function x(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
 
+function compressImg(file,cb,maxW){
+var r=new FileReader();
+r.onload=function(e){
+var img=new Image();
+img.onload=function(){
+var w=img.width,h=img.height;
+if(maxW&&w>maxW){h=Math.round(h*maxW/w);w=maxW}
+var c=document.createElement('canvas');c.width=w;c.height=h;
+c.getContext('2d').drawImage(img,0,0,w,h);
+cb(c.toDataURL('image/jpeg',0.7));
+};
+img.src=e.target.result;
+};
+r.readAsDataURL(file);
+}
+
+function uploadImg(dataUrl,name,cb){
+var tk=localStorage.getItem('pf_gh_token')||'';
+if(!tk){cb(dataUrl);return}
+var base64=dataUrl.split(',')[1];
+var path='images/'+Date.now()+'-'+name;
+var url='https://api.github.com/repos/'+GH_REPO+'/contents/'+path;
+var body=JSON.stringify({message:'Add image',content:base64});
+var xhr=new XMLHttpRequest();
+xhr.open('PUT',url,true);
+xhr.setRequestHeader('Authorization','token '+tk);
+xhr.setRequestHeader('Content-Type','application/json');
+xhr.onload=function(){
+if(xhr.status===200||xhr.status===201){
+var r=JSON.parse(xhr.response);
+cb(r.content.download_url);
+}else{cb(dataUrl)}
+};
+xhr.onerror=function(){cb(dataUrl)};
+xhr.send(body);
+}
+
 function prevCover(inp){
 var f=inp.files[0];if(!f)return;
-var r=new FileReader();
-r.onload=function(e){coverImg=e.target.result;document.getElementById('coverPre').src=coverImg;document.getElementById('coverPre').style.display='block'};
-r.readAsDataURL(f);
+compressImg(f,function(data){
+coverImg=data;
+document.getElementById('coverPre').src=coverImg;
+document.getElementById('coverPre').style.display='block';
+},1200);
 }
 
 function addImgs(inp){
 var files=inp.files;
 for(var i=0;i<files.length;i++){
 (function(f){
-var r=new FileReader();
-r.onload=function(e){
-imgArr.push(e.target.result);
+compressImg(f,function(data){
+imgArr.push(data);
 renderImgList();
-};
-r.readAsDataURL(f);
+},1200);
 })(files[i]);
 }
 }
@@ -291,6 +328,7 @@ function sv(){
 try{
 var t=document.getElementById('iTitle').value.trim();
 if(!t){toast('请输入项目名称');return}
+toast('正在保存...');
 var map={residential:'住宅空间',commercial:'商业空间',office:'办公空间'};
 var c=document.getElementById('iCat').value;
 var o={
@@ -302,10 +340,37 @@ area:document.getElementById('iArea').value.trim(),
 sty:document.getElementById('iStyle').value.trim(),
 c1:document.getElementById('iC1').value,
 c2:document.getElementById('iC2').value,
-cover:coverImg,
-imgs:imgArr.slice(),
+cover:'',
+imgs:[],
 panorama:document.getElementById('iPanorama').value.trim()
 };
+var tk=localStorage.getItem('pf_gh_token')||'';
+if(tk&&coverImg&&coverImg.indexOf('data:')===0){
+uploadImg(coverImg,'cover.jpg',function(url){
+o.cover=url;
+if(imgArr.length>0){uploadAllImgs(o,0)}else{finishSave(o)}
+});
+}else{
+o.cover=coverImg;
+if(imgArr.length>0&&tk){uploadAllImgs(o,0)}else{o.imgs=imgArr.slice();finishSave(o)}
+}
+}catch(e){toast('保存出错:'+e.message)}
+}
+
+function uploadAllImgs(o,idx){
+if(idx>=imgArr.length){finishSave(o);return}
+if(imgArr[idx].indexOf('data:')===0){
+uploadImg(imgArr[idx],'img'+idx+'.jpg',function(url){
+o.imgs.push(url);
+uploadAllImgs(o,idx+1);
+});
+}else{
+o.imgs.push(imgArr[idx]);
+uploadAllImgs(o,idx+1);
+}
+}
+
+function finishSave(o){
 D.push(o);
 sav();
 rl();
@@ -313,7 +378,6 @@ rs();
 go('list');
 toast('已添加，共'+D.length+'个项目');
 setTimeout(syncAll,500);
-}catch(e){toast('保存出错:'+e.message)}
 }
 
 function ep(id){
