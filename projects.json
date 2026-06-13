@@ -1,18 +1,5 @@
 [
     {
-        "id": 3,
-        "title": "暖阳之家",
-        "cat": "residential",
-        "cn": "住宅空间",
-        "area": "260㎡",
-        "sty": "日式侘寂",
-        "c1": "#D4A574",
-        "c2": "#A67C52",
-        "cover": "",
-        "imgs": [],
-        "panorama": ""
-    },
-    {
         "id": 4,
         "title": "创想工作室",
         "cat": "office",
