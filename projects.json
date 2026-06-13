@@ -76,24 +76,5 @@
         "cover": "",
         "imgs": [],
         "panorama": ""
-    },
-    {
-        "id": 1781345769127,
-        "title": "翻新",
-        "cat": "residential",
-        "cn": "住宅空间",
-        "area": "60",
-        "sty": "现代简约",
-        "c1": "#c4a882",
-        "c2": "#8b7355",
-        "cover": "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345769127-cover.jpg",
-        "imgs": [
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345772780-img0.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345774849-img1.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345776523-img2.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345778253-img3.jpg",
-            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781345781130-img4.jpg"
-        ],
-        "panorama": "https://vr.shinewonder.com/pano/page/publik/pklimit?inf=AG@@FELMBBG@GFLBM"
     }
 ]
