@@ -1,18 +1,5 @@
 [
     {
-        "id": 1,
-        "title": "湖畔雅居",
-        "cat": "residential",
-        "cn": "住宅空间",
-        "area": "180㎡",
-        "sty": "现代简约",
-        "c1": "#C4A882",
-        "c2": "#8B7355",
-        "cover": "",
-        "imgs": [],
-        "panorama": ""
-    },
-    {
         "id": 2,
         "title": "绿谷咖啡",
         "cat": "commercial",
