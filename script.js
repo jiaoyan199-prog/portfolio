@@ -71,7 +71,7 @@ var defaultProjects = [
 var allProjects = [];
 
 function loadSettings() {
-    fetch('settings.json')
+    fetch('settings.json?v=' + Date.now())
         .then(function(r) { if(r.ok) return r.json(); throw ''; })
         .then(function(s) { applySettings(s); })
         .catch(function() {
@@ -105,7 +105,7 @@ function applySettings(s) {
 }
 
 function loadProjects() {
-    fetch('projects.json')
+    fetch('projects.json?v=' + Date.now())
         .then(function(r) { if(r.ok) return r.json(); throw ''; })
         .then(function(data) {
             allProjects = data;
