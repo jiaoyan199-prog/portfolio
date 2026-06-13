@@ -1,18 +1,5 @@
 [
     {
-        "id": 5,
-        "title": "云栖别墅",
-        "cat": "residential",
-        "cn": "住宅空间",
-        "area": "420㎡",
-        "sty": "新中式",
-        "c1": "#E8D5C4",
-        "c2": "#C9B8A8",
-        "cover": "",
-        "imgs": [],
-        "panorama": ""
-    },
-    {
         "id": 6,
         "title": "拾光书店",
         "cat": "commercial",
