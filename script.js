@@ -71,13 +71,17 @@ var defaultProjects = [
 var allProjects = [];
 
 function loadSettings() {
+    var local = localStorage.getItem('pf_st');
+    if (local) {
+        try { applySettings(JSON.parse(local)); } catch(e) {}
+    }
     fetch('settings.json?v=' + Date.now())
         .then(function(r) { if(r.ok) return r.json(); throw ''; })
-        .then(function(s) { applySettings(s); })
-        .catch(function() {
-            var data = localStorage.getItem('pf_st');
-            if (data) { try { applySettings(JSON.parse(data)); } catch(e) {} }
-        });
+        .then(function(s) {
+            applySettings(s);
+            localStorage.setItem('pf_st', JSON.stringify(s));
+        })
+        .catch(function() {});
 }
 
 function applySettings(s) {
@@ -105,6 +109,17 @@ function applySettings(s) {
 }
 
 function loadProjects() {
+    var local = localStorage.getItem('pf_pj');
+    if (local) {
+        try {
+            allProjects = JSON.parse(local);
+            allProjects.forEach(function(p) {
+                if (!p.imgs) p.imgs = [];
+                if (!p.panorama) p.panorama = '';
+            });
+            renderProjects(allProjects);
+        } catch(e) {}
+    }
     fetch('projects.json?v=' + Date.now())
         .then(function(r) { if(r.ok) return r.json(); throw ''; })
         .then(function(data) {
@@ -113,16 +128,14 @@ function loadProjects() {
                 if (!p.imgs) p.imgs = [];
                 if (!p.panorama) p.panorama = '';
             });
+            localStorage.setItem('pf_pj', JSON.stringify(allProjects));
             renderProjects(allProjects);
         })
         .catch(function() {
-            var local = localStorage.getItem('pf_pj');
-            if (local) {
-                try { allProjects = JSON.parse(local); } catch(e) { allProjects = defaultProjects; }
-            } else {
+            if (!local) {
                 allProjects = defaultProjects;
+                renderProjects(allProjects);
             }
-            renderProjects(allProjects);
         });
 }
 
