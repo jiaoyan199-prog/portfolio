@@ -288,6 +288,7 @@ renderImgList();
 }
 
 function sv(){
+try{
 var t=document.getElementById('iTitle').value.trim();
 if(!t){toast('请输入项目名称');return}
 var map={residential:'住宅空间',commercial:'商业空间',office:'办公空间'};
@@ -307,11 +308,12 @@ panorama:document.getElementById('iPanorama').value.trim()
 };
 D.push(o);
 sav();
-syncAll();
 rl();
 rs();
 go('list');
 toast('已添加，共'+D.length+'个项目');
+setTimeout(syncAll,500);
+}catch(e){toast('保存出错:'+e.message)}
 }
 
 function ep(id){
@@ -336,8 +338,7 @@ go('add');
 
 function dp(id){
 if(!confirm('确定删除？'))return;
-var n=[];for(var i=0;i<D.length;i++){if(D[i].id!==id)n.push(D[i])}
-D=n;sav();syncAll();rl();toast('已删除');
+try{var n=[];for(var i=0;i<D.length;i++){if(D[i].id!==id)n.push(D[i])}D=n;sav();rl();toast('已删除');setTimeout(syncAll,500)}catch(e){toast('删除出错:'+e.message)}
 }
 
 function rs(){
@@ -359,10 +360,9 @@ document.getElementById('ft').textContent='添加新项目';
 }
 
 function svs(){
-var tk=document.getElementById('sToken').value.trim();
-if(tk)localStorage.setItem('pf_gh_token',tk);
+try{var tk=document.getElementById('sToken').value.trim();if(tk)localStorage.setItem('pf_gh_token',tk);
 var o={name:document.getElementById('sName').value.trim(),heroTitle:document.getElementById('sHero').value.trim(),heroSub:document.getElementById('sSub').value.trim(),about:document.getElementById('sAbout').value.trim(),phone:document.getElementById('sTel').value.trim(),email:document.getElementById('sEm').value.trim(),address:document.getElementById('sAddr').value.trim(),wechat:document.getElementById('sWx').value.trim(),stat1:document.getElementById('s1').value.trim(),stat2:document.getElementById('s2').value.trim()};
-localStorage.setItem('pf_st',JSON.stringify(o));syncAll();toast('设置已保存');
+localStorage.setItem('pf_st',JSON.stringify(o));toast('设置已保存');setTimeout(syncAll,500)}catch(e){toast('保存出错:'+e.message)}
 }
 
 function ls(){
