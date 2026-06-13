@@ -1,18 +1,5 @@
 [
     {
-        "id": 2,
-        "title": "绿谷咖啡",
-        "cat": "commercial",
-        "cn": "商业空间",
-        "area": "120㎡",
-        "sty": "自然风格",
-        "c1": "#6B7F5E",
-        "c2": "#4A5E40",
-        "cover": "",
-        "imgs": [],
-        "panorama": ""
-    },
-    {
         "id": 3,
         "title": "暖阳之家",
         "cat": "residential",
