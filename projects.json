@@ -106,5 +106,22 @@
             "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344085968-img2.jpg"
         ],
         "panorama": ""
+    },
+    {
+        "id": 1781344442170,
+        "title": "璀璨",
+        "cat": "residential",
+        "cn": "住宅空间",
+        "area": "",
+        "sty": "",
+        "c1": "#c4a882",
+        "c2": "#8b7355",
+        "cover": "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344078554-cover.jpg",
+        "imgs": [
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344081245-img0.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344083612-img1.jpg",
+            "https://raw.githubusercontent.com/jiaoyan199-prog/portfolio/main/images/1781344085968-img2.jpg"
+        ],
+        "panorama": "https://720.3vjia.com/S139481728?lang=zh-CN"
     }
 ]
