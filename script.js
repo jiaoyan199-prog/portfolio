@@ -74,14 +74,15 @@ function loadSettings() {
     var local = localStorage.getItem('pf_st');
     if (local) {
         try { applySettings(JSON.parse(local)); } catch(e) {}
+    } else {
+        fetch('settings.json?v=' + Date.now())
+            .then(function(r) { if(r.ok) return r.json(); throw ''; })
+            .then(function(s) {
+                applySettings(s);
+                localStorage.setItem('pf_st', JSON.stringify(s));
+            })
+            .catch(function() {});
     }
-    fetch('settings.json?v=' + Date.now())
-        .then(function(r) { if(r.ok) return r.json(); throw ''; })
-        .then(function(s) {
-            applySettings(s);
-            localStorage.setItem('pf_st', JSON.stringify(s));
-        })
-        .catch(function() {});
 }
 
 function applySettings(s) {
@@ -118,25 +119,27 @@ function loadProjects() {
                 if (!p.panorama) p.panorama = '';
             });
             renderProjects(allProjects);
-        } catch(e) {}
-    }
-    fetch('projects.json?v=' + Date.now())
-        .then(function(r) { if(r.ok) return r.json(); throw ''; })
-        .then(function(data) {
-            allProjects = data;
-            allProjects.forEach(function(p) {
-                if (!p.imgs) p.imgs = [];
-                if (!p.panorama) p.panorama = '';
-            });
-            localStorage.setItem('pf_pj', JSON.stringify(allProjects));
+        } catch(e) {
+            allProjects = defaultProjects;
             renderProjects(allProjects);
-        })
-        .catch(function() {
-            if (!local) {
+        }
+    } else {
+        fetch('projects.json?v=' + Date.now())
+            .then(function(r) { if(r.ok) return r.json(); throw ''; })
+            .then(function(data) {
+                allProjects = data;
+                allProjects.forEach(function(p) {
+                    if (!p.imgs) p.imgs = [];
+                    if (!p.panorama) p.panorama = '';
+                });
+                localStorage.setItem('pf_pj', JSON.stringify(allProjects));
+                renderProjects(allProjects);
+            })
+            .catch(function() {
                 allProjects = defaultProjects;
                 renderProjects(allProjects);
-            }
-        });
+            });
+    }
 }
 
 function renderProjects(projects) {
