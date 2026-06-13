@@ -1,18 +1,5 @@
 [
     {
-        "id": 4,
-        "title": "创想工作室",
-        "cat": "office",
-        "cn": "办公空间",
-        "area": "350㎡",
-        "sty": "工业现代",
-        "c1": "#8B8B8B",
-        "c2": "#5A5A5A",
-        "cover": "",
-        "imgs": [],
-        "panorama": ""
-    },
-    {
         "id": 5,
         "title": "云栖别墅",
         "cat": "residential",
